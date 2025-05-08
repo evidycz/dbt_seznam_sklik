@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: seznam_sklik
+    schema: evidy_seznam_sklik
+    tables:
+      - name: accounts
+      - name: ads_stats
+      - name: banners_stats
+      - name: campaigns_settings
+      - name: groups_stats
+      - name: queries_stats
+      - name: retargeting_stats

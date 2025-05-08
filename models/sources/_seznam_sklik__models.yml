@@ -1,0 +1,10 @@
+version: 2
+
+models:
+  - name: source_seznam_sklik__accounts_settings
+  - name: source_seznam_sklik__ads_stats
+  - name: source_seznam_sklik__banners_stats
+  - name: source_seznam_sklik__campaigns_settings
+  - name: source_seznam_sklik__groups_stats
+  - name: source_seznam_sklik__queries_stats
+  - name: source_seznam_sklik__retargeting_stats

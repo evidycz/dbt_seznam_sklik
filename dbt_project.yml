@@ -1,0 +1,27 @@
+name: 'seznam_sklik'
+version: '0.1.0'
+
+require-dbt-version: [">=1.3.0", "<2.0.0"]
+
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  materialized: ephemeral
+  bind: false
+  transformation:
+    sources:
+      +schema: seznam_sklik_source
+      +materialized: view
+    marts:
+      +schema: seznam_sklik
+      +materialized: table

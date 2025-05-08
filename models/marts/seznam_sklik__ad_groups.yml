@@ -1,0 +1,272 @@
+version: 2
+
+models:
+  - name: seznam_sklik__ad_groups
+    description: "Each record in this table represents the daily performance at the ad group level."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - ad_group_id
+            - campaign_id
+            - date_day
+    meta:
+      metrics:
+        ctr:
+          label: "CTR"
+          type: number
+          sql: "sum(${clicks}) / sum(${impressions})"
+          format: "#,##0.00%"
+        avg_cpc:
+          label: "CPC"
+          type: number
+          sql: "sum(${cost}) / sum(${clicks})"
+          format: "#,##0.00' Kč'"
+        avg_cpm:
+          label: "CPM"
+          type: number
+          sql: "sum(${cost}) * 1000 / sum(${impressions})"
+          format: "#,##0.00' Kč'"
+        avg_cpv:
+          label: "CPV"
+          type: number
+          sql: "sum(${cost}) / sum(${views})"
+          format: "#,##0.00' Kč'"
+        avg_cpa:
+          label: "CPA"
+          type: number
+          sql: "sum(${cost}) / sum(${conversions})"
+          format: "#,##0.00' Kč'"
+        avg_position:
+          label: "Avg. Position"
+          type: number
+          sql: "sum(${impressions} * ${ad_position}) / sum(${impressions})"
+          format: "#,##0.00"
+        view_rate:
+          label: "VTR"
+          type: number
+          sql: "sum(${views}) / sum(${impressions})"
+          format: "#,##0.00%"
+        avg_win_rate:
+          label: "Avg. Win Rate"
+          type: number
+          sql: "sum(${impressions} * ${win_rate}) / sum(${impressions})"
+          format: "#,##0.00%"
+        system_pno:
+          label: "PNO"
+          type: number
+          sql: "sum(${spend_czk}) / sum(${conversions_value})"
+          format: "#,##0.00%"
+        system_roas:
+          label: "ROAS"
+          type: number
+          sql: "sum(${conversions_value}) / sum(${spend_czk})"
+          format: "#,##0.00%"
+
+    columns:
+      - name: date_day
+        data_type: date
+        description: "{{ doc('date_day') }}"
+        meta:
+          dimension:
+            label: "Date"
+            type: date
+            time_intervals: [ "DAY", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK", "WEEK_NUM", "MONTH_NUM", "MONTH", "YEAR" ]
+
+      - name: account_id
+        data_type: string
+        description: "{{ doc('account_id') }}"
+        meta:
+          dimension:
+            label: "Account ID"
+            type: string
+
+      - name: account_name
+        data_type: string
+        description: "{{ doc('account_name') }}"
+        meta:
+          dimension:
+            label: "Account Name"
+            type: string
+
+      - name: campaign_id
+        data_type: string
+        description: "{{ doc('campaign_id') }}"
+        meta:
+          dimension:
+            label: "Campaign ID"
+            type: string
+
+      - name: campaign_name
+        data_type: string
+        description: "{{ doc('campaign_name') }}"
+        meta:
+          dimension:
+            label: "Campaign Name"
+            type: string
+
+      - name: ad_group_id
+        data_type: string
+        description: "{{ doc('ad_group_id') }}"
+        meta:
+          dimension:
+            label: "Ad Group ID"
+            type: string
+
+      - name: ad_group_name
+        data_type: string
+        description: "{{ doc('ad_group_name') }}"
+        meta:
+          dimension:
+            label: "Ad Group Name"
+            type: string
+
+      - name: ad_group_status
+        data_type: string
+        description: "{{ doc('ad_group_status') }}"
+        meta:
+          dimension:
+            label: "Ad Group Status"
+            type: string
+
+      - name: set_cpc
+        data_type: numeric
+        description: "{{ doc('set_cpc') }}"
+        meta:
+          dimension:
+            label: "Set CPC"
+            type: number
+
+      - name: set_cpm
+        data_type: numeric
+        description: "{{ doc('set_cpm') }}"
+        meta:
+          dimension:
+            label: "Set CPM"
+            type: number
+
+      - name: impressions
+        data_type: int
+        description: "{{ doc('impressions') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_impressions:
+              label: "Impressions"
+              type: SUM
+
+      - name: clicks
+        data_type: int
+        description: "{{ doc('clicks') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_clicks:
+              label: "Clicks"
+              type: SUM
+
+      - name: views
+        data_type: int
+        description: "{{ doc('views') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_views:
+              label: "Views"
+              type: SUM
+
+      - name: conversions
+        data_type: int
+        description: "{{ doc('conversions') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_conversions:
+              label: "Conversions"
+              type: SUM
+
+      - name: conversions_value
+        data_type: numeric
+        description: "{{ doc('conversions_value') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_conversions_value:
+              label: "Conversions Value"
+              type: SUM
+              format: "#,##0.00' Kč'"
+            avg_conversions_value:
+              label: "Avg. Conv. Value"
+              type: AVERAGE
+              format: "#,##0.00' Kč'"
+
+      - name: spend_czk
+        data_type: numeric
+        description: "{{ doc('spend_czk') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_spend:
+              label: "Spend"
+              type: SUM
+              format: "#,##0.00' Kč'"
+            avg_daily_spend:
+              label: "Avg. Daily Spend"
+              type: AVG
+              format: "#,##0.00' Kč'"
+
+      - name: ad_position
+        data_type: numeric
+        description: "{{ doc('ad_position') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            min_position:
+              label: "Min. Position"
+              type: MIN
+              format: "#,##0.00"
+            max_position:
+              label: "Max. Position"
+              type: MAX
+              format: "#,##0.00"
+
+      - name: win_rate
+        data_type: numeric
+        description: "{{ doc('win_rate') }}"
+        meta:
+          dimension:
+            hidden: true
+
+      - name: view_rate_25
+        data_type: numeric
+        description: "{{ doc('view_rate_25') }}"
+        meta:
+          dimension:
+            hidden: true
+
+      - name: view_rate_50
+        data_type: numeric
+        description: "{{ doc('view_rate_50') }}"
+        meta:
+          dimension:
+            hidden: true
+
+      - name: view_rate_75
+        data_type: numeric
+        description: "{{ doc('view_rate_75') }}"
+        meta:
+          dimension:
+            hidden: true
+
+      - name: view_rate_100
+        data_type: numeric
+        description: "{{ doc('view_rate_100') }}"
+        meta:
+          dimension:
+            hidden: true

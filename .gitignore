@@ -1,0 +1,15 @@
+
+
+logs/
+target/
+dbt_modules/
+dbt_packages/
+
+package-lock.yml
+.DS_Store
+
+env/
+.venv/
+venv/
+
+.idea/

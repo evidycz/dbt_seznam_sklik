@@ -1,0 +1,139 @@
+version: 2
+
+models:
+  - name: seznam_sklik__accounts
+    description: "Each record in this table represents the daily performance at the account level."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - account_id
+            - date_day
+    meta:
+      metrics:
+        ctr:
+          label: "CTR"
+          type: number
+          sql: "sum(${clicks}) / sum(${impressions})"
+          format: "#,##0.00%"
+        avg_cpc:
+          label: "CPC"
+          type: number
+          sql: "sum(${cost}) / sum(${clicks})"
+          format: "#,##0.00' Kč'"
+        avg_cpm:
+          label: "CPM"
+          type: number
+          sql: "sum(${cost}) * 1000 / sum(${impressions})"
+          format: "#,##0.00' Kč'"
+        system_pno:
+          label: "PNO"
+          type: number
+          sql: "sum(${spend_czk}) / sum(${conversions_value})"
+          format: "#,##0.00%"
+        system_roas:
+          label: "ROAS"
+          type: number
+          sql: "sum(${conversions_value}) / sum(${spend_czk})"
+          format: "#,##0.00%"
+
+    columns:
+      - name: date_day
+        data_type: date
+        description: "{{ doc('date_day') }}"
+        meta:
+          dimension:
+            label: "Date"
+            type: date
+            time_intervals: [ "DAY", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK", "WEEK_NUM", "MONTH_NUM", "MONTH", "YEAR" ]
+
+      - name: account_id
+        data_type: string
+        description: "{{ doc('account_id') }}"
+        tests:
+          - not_null
+        meta:
+          dimension:
+            label: "Account ID"
+            type: string
+
+      - name: account_name
+        data_type: string
+        description: "{{ doc('account_name') }}"
+        meta:
+          dimension:
+            label: "Account Name"
+            type: string
+
+      - name: wallet_credit_czk
+        data_type: numeric
+        description: "{{ doc('wallet_credit_czk') }}"
+        meta:
+          dimension:
+            label: "Credit"
+            type: number
+            format: "#,##0.00' Kč'"
+
+      - name: impressions
+        data_type: int
+        description: "{{ doc('impressions') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_impressions:
+              label: "Impressions"
+              type: SUM
+
+      - name: clicks
+        data_type: int
+        description: "{{ doc('clicks') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_clicks:
+              label: "Clicks"
+              type: SUM
+
+      - name: conversions
+        data_type: int
+        description: "{{ doc('conversions') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_conversions:
+              label: "Conversions"
+              type: SUM
+
+      - name: conversions_value
+        data_type: numeric
+        description: "{{ doc('conversions_value') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_conversions_value:
+              label: "Conversions Value"
+              type: SUM
+              format: "#,##0.00' Kč'"
+            avg_conversions_value:
+              label: "Avg. Conv. Value"
+              type: AVERAGE
+              format: "#,##0.00' Kč'"
+
+      - name: spend_czk
+        data_type: numeric
+        description: "{{ doc('spend_czk') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_spend:
+              label: "Spend"
+              type: SUM
+              format: "#,##0.00' Kč'"
+            avg_daily_spend:
+              label: "Avg. Daily Spend"
+              type: AVG
+              format: "#,##0.00' Kč'"
