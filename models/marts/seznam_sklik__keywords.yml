@@ -8,7 +8,7 @@ models:
           combination_of_columns:
             - keyword_id
             - ad_group_id
-            - date_day
+            - campaign_id
     meta:
       metrics:
         ctr:

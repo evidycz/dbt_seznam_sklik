@@ -1,3 +1,5 @@
+{{ config(enabled=var('seznam_sklik__using_search_term_keyword_stats', True)) }}
+
 with queries_stats as (
 
     select *

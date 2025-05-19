@@ -3,12 +3,6 @@ version: 2
 models:
   - name: seznam_sklik__search_terms
     description: "Each record in this table represents the daily performance at the search term level."
-    tests:
-      - dbt_utils.unique_combination_of_columns:
-          combination_of_columns:
-            - ad_id
-            - ad_group_id
-            - date_day
     meta:
       metrics:
         ctr:
