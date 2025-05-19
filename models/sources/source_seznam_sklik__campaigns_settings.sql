@@ -1,7 +1,7 @@
 with base as (
 
     select *
-    from {{ source('seznam_sklik', 'campaigns_settings') }}
+    from {{ source('seznam_sklik', 'campaigns') }}
 ),
 
 final as (
@@ -10,7 +10,7 @@ final as (
         account_id,
         account_name,
 
-        id as campaign_id,
+        cast(id as string) as campaign_id,
         name as campaign_name,
         type as campaign_type,
         status as campaign_status,
