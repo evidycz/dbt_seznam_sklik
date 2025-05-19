@@ -6,7 +6,7 @@ with base as (
 
 final as (
     select
-        "date" as date_day,
+        {{ adapter.quote('date') }} as date_day,
 
         account_id,
         account_name,

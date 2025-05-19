@@ -41,13 +41,14 @@ This package assumes you have a schema named `evidy_seznam_sklik` with the follo
 - queries_stats
 - retargeting_stats
 
-You can override the source schema in your `dbt_project.yml` file:
+You can override the default database and schema settings via vars in `dbt_project.yml` file:
 
 ```yaml
-sources:
-  seznam_sklik:
-    schema: your_schema_name
+vars:
+  seznam_sklik_database: your_database_name
+  seznam_sklik_schema: your_schema_name
 ```
+By default, this package runs using your destination and the `seznam_sklik` schema.
 
 ## Models
 
@@ -55,10 +56,10 @@ The package creates the following models:
 
 ### Source Models
 These models are direct representations of the source tables with minimal transformations:
-- source_seznam_sklik__accounts_settings
+- source_seznam_sklik__accounts
 - source_seznam_sklik__ads_stats
 - source_seznam_sklik__banners_stats
-- source_seznam_sklik__campaigns_settings
+- source_seznam_sklik__campaigns
 - source_seznam_sklik__groups_stats
 - source_seznam_sklik__queries_stats
 - source_seznam_sklik__retargeting_stats
@@ -79,6 +80,16 @@ Each mart model includes:
 - Dimensions (date, IDs, names, statuses)
 - Metrics (impressions, clicks, conversions, spend)
 - Calculated metrics (CTR, CPC, CPM, ROAS)
+
+#### Disable Search Term Keyword Stats
+This package uses `queries_stats` source to generate `keyword_stats` and `search_term_stats` models. 
+The generation of these models can be disabled by setting the `seznam_sklik__using_search_term_keyword_stats` variable 
+to `false`. Generation of these models is enabled by default.
+
+```yaml
+vars:
+  seznam_sklik__using_search_term_keyword_stats: False
+```
 
 ## Macros
 

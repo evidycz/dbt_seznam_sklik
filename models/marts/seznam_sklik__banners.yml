@@ -8,6 +8,7 @@ models:
           combination_of_columns:
             - banner_id
             - ad_group_id
+            - campaign_id
             - date_day
     meta:
       metrics:
