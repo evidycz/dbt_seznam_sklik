@@ -82,7 +82,7 @@ models:
           metrics:
             total_impressions:
               label: "Impressions"
-              type: SUM
+              type: sum
 
       - name: clicks
         data_type: int
@@ -93,7 +93,7 @@ models:
           metrics:
             total_clicks:
               label: "Clicks"
-              type: SUM
+              type: sum
 
       - name: conversions
         data_type: int
@@ -104,7 +104,7 @@ models:
           metrics:
             total_conversions:
               label: "Conversions"
-              type: SUM
+              type: sum
 
       - name: conversions_value
         data_type: numeric
@@ -115,11 +115,11 @@ models:
           metrics:
             total_conversions_value:
               label: "Conversions Value"
-              type: SUM
+              type: sum
               format: "#,##0.00' Kč'"
             avg_conversions_value:
               label: "Avg. Conv. Value"
-              type: AVERAGE
+              type: average
               format: "#,##0.00' Kč'"
 
       - name: spend_czk
@@ -131,9 +131,9 @@ models:
           metrics:
             total_spend:
               label: "Spend"
-              type: SUM
+              type: sum
               format: "#,##0.00' Kč'"
             avg_daily_spend:
               label: "Avg. Daily Spend"
-              type: AVG
+              type: average
               format: "#,##0.00' Kč'"
