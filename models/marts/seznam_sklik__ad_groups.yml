@@ -14,52 +14,52 @@ models:
         ctr:
           label: "CTR"
           type: number
-          sql: "sum(${clicks}) / sum(${impressions})"
+          sql: "${total_clicks} / ${total_impressions}"
           format: "#,##0.00%"
         avg_cpc:
           label: "CPC"
           type: number
-          sql: "sum(${cost}) / sum(${clicks})"
+          sql: "${total_spend} / ${total_clicks}"
           format: "#,##0.00' Kč'"
         avg_cpm:
           label: "CPM"
           type: number
-          sql: "sum(${cost}) * 1000 / sum(${impressions})"
+          sql: "${total_spend} * 1000 / ${total_impressions}"
           format: "#,##0.00' Kč'"
         avg_cpv:
           label: "CPV"
           type: number
-          sql: "sum(${cost}) / sum(${views})"
+          sql:  "${total_spend} / ${total_views}"
           format: "#,##0.00' Kč'"
         avg_cpa:
           label: "CPA"
           type: number
-          sql: "sum(${cost}) / sum(${conversions})"
+          sql: "${total_spend} / ${total_conversions}"
           format: "#,##0.00' Kč'"
-        avg_position:
-          label: "Avg. Position"
-          type: number
-          sql: "sum(${impressions} * ${ad_position}) / sum(${impressions})"
-          format: "#,##0.00"
+#        avg_position:
+#          label: "Avg. Position"
+#          type: number
+#          sql: ${total_impressions} * ${ad_position}) / ${total_impressions}
+#          format: "#,##0.00"
         view_rate:
           label: "VTR"
           type: number
-          sql: "sum(${views}) / sum(${impressions})"
+          sql: "${total_views} / ${total_impressions}"
           format: "#,##0.00%"
-        avg_win_rate:
-          label: "Avg. Win Rate"
-          type: number
-          sql: "sum(${impressions} * ${win_rate}) / sum(${impressions})"
-          format: "#,##0.00%"
+#        avg_win_rate:
+#          label: "Avg. Win Rate"
+#          type: number
+#          sql: "sum(${impressions} * ${win_rate}) / sum(${impressions})"
+#          format: "#,##0.00%"
         system_pno:
           label: "PNO"
           type: number
-          sql: "sum(${spend_czk}) / sum(${conversions_value})"
+          sql: "${total_spend} / ${total_conversions_value}"
           format: "#,##0.00%"
         system_roas:
           label: "ROAS"
           type: number
-          sql: "sum(${conversions_value}) / sum(${spend_czk})"
+          sql: "${total_conversions_value} / ${total_spend}"
           format: "#,##0.00%"
 
     columns:
