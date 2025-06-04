@@ -8,7 +8,6 @@ groups_stats as (
 
     select *
     from {{ ref('source_seznam_sklik__groups_stats') }}
-    where win_rate != 0
 ),
 
 ads_stats as (
@@ -24,6 +23,8 @@ campaigns_stats as (
         date_day,
 
         campaign_id,
+
+        device,
 
         sum(impressions) as impressions,
         sum(clicks) as clicks,
@@ -41,7 +42,7 @@ campaigns_stats as (
         sum(schedule_lost_impressions) as schedule_lost_impressions,
 
     from groups_stats
-    {{ dbt_utils.group_by(n=2) }}
+    {{ dbt_utils.group_by(n=3) }}
 ),
 
 views_stats as (
@@ -76,6 +77,8 @@ fields as (
 
         campaign_settings.ad_selection,
         campaign_settings.video_format,
+
+        campaigns_stats.device,
 
         campaigns_stats.impressions,
         campaigns_stats.clicks,

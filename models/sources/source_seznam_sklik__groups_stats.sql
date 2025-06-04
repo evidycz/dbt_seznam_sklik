@@ -13,7 +13,7 @@ final as (
         cast(campaign__id as string) as campaign_id,
         cast(id as string) as ad_group_id,
 
-        upper(device) end as device,
+        upper(device) as device,
 
         coalesce(impressions, 0) as impressions,
         coalesce(clicks, 0) as clicks,

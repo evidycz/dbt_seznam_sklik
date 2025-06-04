@@ -8,6 +8,7 @@ models:
           combination_of_columns:
             - ad_group_id
             - campaign_id
+            - device
             - date_day
 
     columns:
