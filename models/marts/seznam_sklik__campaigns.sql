@@ -34,7 +34,7 @@ campaigns_stats as (
 
         {{ weighted_average('ad_position', 'impressions', 'ad_position', round_to=2) }},
 
-        {{ weighted_average('win_rate', 'impressions', 'win_rate', round_to=2) }},
+        {{ weighted_average('auction_win', 'impressions', 'auction_win', round_to=2) }},
 
         sum(miss_impressions) as miss_impressions,
         sum(rank_lost_impressions) as rank_lost_impressions,
@@ -89,9 +89,12 @@ fields as (
 
         campaigns_stats.ad_position,
 
-        coalesce(campaigns_stats.win_rate, 0) as win_rate,
+        coalesce(campaigns_stats.auction_win, 0) as auction_win,
 
-        {{ impression_shares('impressions', 'miss_impressions',  round_to=2) }},
+        miss_impressions,
+        rank_lost_impressions,
+        budget_lost_impressions,
+        schedule_lost_impressions,
 
         coalesce(views_stats.view_rate_25, 0) as view_rate_25,
         coalesce(views_stats.view_rate_50, 0) as view_rate_50,

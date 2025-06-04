@@ -11,6 +11,46 @@ models:
             - campaign_id
             - date_day
 
+    meta:
+      group_details:
+        impression_share:
+          label: "Impression share"
+          description: "Fields that contain information about impression share and losses."
+        atypical_metrics:
+          label: "Atypical metrics"
+          description: "Unusual metrics that are not commonly used in advertising accounts."
+      metrics:
+        ctr:
+          label: "CTR"
+          type: number
+          sql: "${total_clicks} / ${total_impressions}"
+          format: "#,##0.00%"
+        avg_cpc:
+          label: "CPC"
+          type: number
+          sql: "${total_spend} / ${total_clicks}"
+          format: "#,##0.00 Kč"
+        avg_cpm:
+          label: "CPM"
+          type: number
+          sql: "${total_spend} * 1000 / ${total_impressions}"
+          format: "#,##0.00 Kč"
+        avg_cpa:
+          label: "CPA"
+          type: number
+          sql: "${total_spend} / ${total_conversions}"
+          format: "#,##0.00 Kč"
+        system_pno:
+          label: "PNO"
+          type: number
+          sql: "${total_spend} / ${total_conversions_value}"
+          format: "#,##0.00%"
+        system_roas:
+          label: "ROAS"
+          type: number
+          sql: "${total_conversions_value} / ${total_spend}"
+          format: "#,##0.00%"
+
     columns:
       - name: date_day
         data_type: date
@@ -19,7 +59,7 @@ models:
           dimension:
             label: "Date"
             type: date
-            time_intervals: ["DAY", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK", "WEEK_NUM", "MONTH_NUM", "MONTH", "YEAR"]
+            time_intervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
 
       - name: account_id
         data_type: string
@@ -128,11 +168,12 @@ models:
             total_conversions_value:
               label: "Conversions Value"
               type: sum
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
             avg_conversions_value:
               label: "Avg. Conv. Value"
               type: average
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
+              groups: [ "atypical_metrics" ]
 
       - name: spend_czk
         data_type: numeric
@@ -144,11 +185,12 @@ models:
             total_spend:
               label: "Spend"
               type: sum
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
             avg_daily_spend:
               label: "Avg. Daily Spend"
               type: average
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
+              groups: [ "atypical_metrics" ]
 
       - name: ad_position
         data_type: numeric
@@ -157,39 +199,91 @@ models:
           dimension:
             hidden: true
           metrics:
+            weight_position:
+              label: "Position Weight"
+              hidden: true
+              type: sum
+              sql: "${impressions} * ${ad_position}"
+            avg_position:
+              label: "Avg. Position"
+              type: number
+              sql: "${weight_position} / ${total_impressions}"
+              format: "#,##0.00"
             min_position:
               label: "Min. Position"
               type: min
               format: "#,##0.00"
+              groups: [ "atypical_metrics" ]
             max_position:
               label: "Max. Position"
               type: max
               format: "#,##0.00"
+              groups: [ "atypical_metrics" ]
 
-      - name: impression_share
+      - name: miss_impressions
         data_type: numeric
         description: "{{ doc('impression_share') }}"
         meta:
           dimension:
             hidden: true
+          metrics:
+            impression_share:
+              label: "Impression Share"
+              type: number
+              sql: "${total_impressions} / ${total_possible_impressions}"
+              format: "#,##0.00%"
+              groups: [ "impression_share" ]
 
-      - name: rank_lost_impression_share
+      - name: rank_lost_impressions
         data_type: numeric
         description: "{{ doc('rank_lost_impression_share') }}"
         meta:
           dimension:
             hidden: true
+          metrics:
+            total_rank_lost_impressions:
+              label: "Total Rank Lost Impressions"
+              hidden: true
+              type: sum
+            rank_lost_impression_share:
+              label: "Rank Lost IS"
+              type: number
+              sql: "${total_rank_lost_impressions} / ${total_possible_impressions}"
+              format: "#,##0.00%"
+              groups: [ "impression_share" ]
 
-      - name: budget_lost_impression_share
+      - name: budget_lost_impressions
         data_type: numeric
         description: "{{ doc('budget_lost_impression_share') }}"
         meta:
           dimension:
             hidden: true
+          metrics:
+            total_budget_lost_impressions:
+              label: "Total Budget Lost Impressions"
+              hidden: true
+              type: sum
+            budget_lost_impression_share:
+              label: "Budget Lost IS"
+              type: number
+              sql: "${total_budget_lost_impressions} / ${total_possible_impressions}"
+              format: "#,##0.00%"
+              groups: [ "impression_share" ]
 
-  - name: schedule_lost_impression_share
-    data_type: numeric
-    description: "{{ doc('schedule_lost_impression_share') }}"
-    meta:
-      dimension:
-        hidden: true
+      - name: schedule_lost_impressions
+        data_type: numeric
+        description: "{{ doc('schedule_lost_impression_share') }}"
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_schedule_lost_impressions:
+              label: "Total Schedule Lost Impressions"
+              hidden: true
+              type: sum
+            schedule_lost_impression_share:
+              label: "Schedule Lost IS"
+              type: number
+              sql: "${total_schedule_lost_impressions} / ${total_possible_impressions}"
+              format: "#,##0.00%"
+              groups: [ "impression_share" ]

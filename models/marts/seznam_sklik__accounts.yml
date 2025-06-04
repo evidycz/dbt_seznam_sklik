@@ -9,6 +9,39 @@ models:
             - account_id
             - date_day
 
+    meta:
+      metrics:
+        ctr:
+          label: "CTR"
+          type: number
+          sql: "${total_clicks} / ${total_impressions}"
+          format: "#,##0.00%"
+        avg_cpc:
+          label: "CPC"
+          type: number
+          sql: "${total_spend} / ${total_clicks}"
+          format: "#,##0.00 Kč"
+        avg_cpm:
+          label: "CPM"
+          type: number
+          sql: "${total_spend} * 1000 / ${total_impressions}"
+          format: "#,##0.00 Kč"
+        avg_cpa:
+          label: "CPA"
+          type: number
+          sql: "${total_spend} / ${total_conversions}"
+          format: "#,##0.00 Kč"
+        system_pno:
+          label: "PNO"
+          type: number
+          sql: "${total_spend} / ${total_conversions_value}"
+          format: "#,##0.00%"
+        system_roas:
+          label: "ROAS"
+          type: number
+          sql: "${total_conversions_value} / ${total_spend}"
+          format: "#,##0.00%"
+
     columns:
       - name: date_day
         data_type: date
@@ -17,7 +50,7 @@ models:
           dimension:
             label: "Date"
             type: date
-            time_intervals: [ "DAY", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK", "WEEK_NUM", "MONTH_NUM", "MONTH", "YEAR" ]
+            time_intervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
 
       - name: account_id
         data_type: string
@@ -44,7 +77,7 @@ models:
           dimension:
             label: "Credit"
             type: number
-            format: "#,##0.00' Kč'"
+            format: "#,##0.00 Kč"
 
       - name: impressions
         data_type: int
@@ -89,11 +122,11 @@ models:
             total_conversions_value:
               label: "Conversions Value"
               type: sum
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
             avg_conversions_value:
               label: "Avg. Conv. Value"
               type: average
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
 
       - name: spend_czk
         data_type: numeric
@@ -105,8 +138,8 @@ models:
             total_spend:
               label: "Spend"
               type: sum
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"
             avg_daily_spend:
               label: "Avg. Daily Spend"
               type: average
-              format: "#,##0.00' Kč'"
+              format: "#,##0.00 Kč"

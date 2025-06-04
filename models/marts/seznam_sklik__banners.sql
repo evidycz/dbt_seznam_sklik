@@ -33,7 +33,11 @@ fields as (
 
         ad_position,
 
-        {{ impression_shares('impressions', 'miss_impressions', round_to=2) }},
+        miss_impressions,
+        rank_lost_impressions,
+        budget_lost_impressions,
+        schedule_lost_impressions,
+
     from banner_stats
 )
 
