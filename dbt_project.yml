@@ -1,5 +1,5 @@
 name: 'seznam_sklik'
-version: '0.1.7'
+version: '0.1.8'
 
 require-dbt-version: [ ">=1.3.0", "<2.0.0" ]
 
@@ -25,5 +25,5 @@ models:
       base:
         +materialized: ephemeral
     marts:
-      +schema: seznam_sklik_marts
+      +schema: seznam_sklik
       +materialized: table
