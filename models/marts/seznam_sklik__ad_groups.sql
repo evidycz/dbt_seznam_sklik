@@ -1,4 +1,10 @@
-with groups_stats as (
+with groups_settings as (
+
+    select *
+    from {{ ref('source_seznam_sklik__groups_settings') }}
+),
+
+groups_stats as (
 
     select *
     from {{ ref('source_seznam_sklik__groups_stats') }}
@@ -33,18 +39,20 @@ fields as (
     select
         groups_stats.date_day,
 
-        groups_stats.account_id,
-        groups_stats.account_name,
+        groups_settings.account_id,
+        groups_settings.account_name,
 
-        groups_stats.campaign_id,
-        groups_stats.campaign_name,
+        groups_settings.campaign_id,
+        groups_settings.campaign_name,
 
         groups_stats.ad_group_id,
-        groups_stats.ad_group_name,
-        groups_stats.ad_group_status,
+        groups_settings.ad_group_name,
+        groups_settings.ad_group_status,
 
-        groups_stats.set_cpc,
-        groups_stats.set_cpm,
+        groups_settings.set_cpc,
+        groups_settings.set_cpm,
+
+        groups_stats.device,
 
         groups_stats.impressions,
         groups_stats.clicks,
@@ -63,6 +71,8 @@ fields as (
         coalesce(views_stats.view_rate_100, 0) as view_rate_100,
 
     from groups_stats
+    left join groups_settings
+        on groups_stats.ad_group_id = groups_settings.ad_group_id
     left join views_stats
         on groups_stats.ad_group_id = views_stats.ad_group_id
         and groups_stats.date_day = views_stats.date_day

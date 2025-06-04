@@ -1,4 +1,4 @@
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'retargeting_stats') }}
@@ -34,7 +34,7 @@ final as (
         coalesce(exhausted_budget, exhausted_budget_share, 0) as budget_lost_impressions,
         coalesce(stopped_by_schedule, 0) as schedule_lost_impressions
 
-    from base
+    from source
 )
 
 select * from final

@@ -1,7 +1,7 @@
 with base as (
 
     select *
-    from {{ source('seznam_sklik', 'groups_stats') }}
+    from {{ ref('base_seznam_sklik__groups_stats') }}
 ),
 
 final as (
@@ -10,17 +10,10 @@ final as (
         {{ adapter.quote('date') }} as date_day,
 
         account_id,
-        account_name,
-
         cast(campaign__id as string) as campaign_id,
-        campaign__name as campaign_name,
-
         cast(id as string) as ad_group_id,
-        name as ad_group_name,
-        status as ad_group_status,
 
-        round(coalesce(max_cpc, 0) / 100, 2) as set_cpc,
-        round(coalesce(max_cpt, 0) / 100, 2) as set_cpm,
+        upper(device) as device,
 
         coalesce(impressions, 0) as impressions,
         coalesce(clicks, 0) as clicks,

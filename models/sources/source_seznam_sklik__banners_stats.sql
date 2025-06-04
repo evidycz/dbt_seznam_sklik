@@ -1,4 +1,4 @@
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'banners_stats') }}
@@ -22,8 +22,8 @@ final as (
         banner_name,
         status as banner_status,
         ad_status as banner_condition,
-        cast(width as string) as width,
-        cast(height as string) as height,
+        cast(image__width as string) as width,
+        cast(image__height as string) as height,
 
         coalesce(impressions, 0) as impressions,
         coalesce(clicks, 0) as clicks,
@@ -38,7 +38,7 @@ final as (
         coalesce(exhausted_budget, exhausted_budget_share, 0) as budget_lost_impressions,
         coalesce(stopped_by_schedule, 0) as schedule_lost_impressions,
 
-    from base
+    from source
 )
 
 select * from final

@@ -8,6 +8,7 @@ models:
           combination_of_columns:
             - ad_group_id
             - campaign_id
+            - device
             - date_day
 
     columns:
@@ -74,6 +75,14 @@ models:
         meta:
           dimension:
             label: "Ad Group Status"
+            type: string
+
+      - name: device
+        data_type: string
+        description: "{{ doc('device') }}"
+        meta:
+          dimension:
+            label: "Device"
             type: string
 
       - name: set_cpc

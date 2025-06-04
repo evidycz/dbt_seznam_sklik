@@ -1,4 +1,4 @@
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'accounts') }}
@@ -18,7 +18,7 @@ final as (
 
         wallet_credit / 100 as wallet_credit_czk
 
-    from base
+    from source
 )
 
 select * from final
