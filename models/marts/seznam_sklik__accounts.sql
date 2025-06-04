@@ -16,7 +16,6 @@ accounts_stats as (
     select
         date_day,
         account_id,
-        account_name,
 
         sum(impressions) as impressions,
         sum(clicks) as clicks,
@@ -25,7 +24,7 @@ accounts_stats as (
         sum(spend_czk) as spend_czk,
 
     from groups_stats
-    {{ dbt_utils.group_by(n=3) }}
+    {{ dbt_utils.group_by(n=2) }}
 ),
 
 fields as (
