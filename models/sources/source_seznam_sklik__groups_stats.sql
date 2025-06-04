@@ -23,7 +23,7 @@ final as (
 
         coalesce(avg_pos, 0) as ad_position,
 
-        coalesce(win_rate, 0) as win_rate,
+        coalesce(win_rate, 0) as auction_win,
 
         coalesce(miss_impressions, 0) as miss_impressions,
         coalesce(under_forest_threshold, 0) as rank_lost_impressions,

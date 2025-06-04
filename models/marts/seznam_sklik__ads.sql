@@ -34,12 +34,16 @@ fields as (
 
         ad_position,
 
+        miss_impressions,
+        rank_lost_impressions,
+        budget_lost_impressions,
+        schedule_lost_impressions,
+
         view_rate_25,
         view_rate_50,
         view_rate_75,
         view_rate_100,
 
-        {{ impression_shares('impressions', 'miss_impressions', round_to=2) }},
     from ads_stats
 )
 
