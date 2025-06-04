@@ -76,6 +76,14 @@ models:
             label: "Ad Group Status"
             type: string
 
+      - name: device
+        data_type: string
+        description: "{{ doc('device') }}"
+        meta:
+          dimension:
+            label: "Device"
+            type: string
+
       - name: set_cpc
         data_type: numeric
         description: "{{ doc('set_cpc') }}"

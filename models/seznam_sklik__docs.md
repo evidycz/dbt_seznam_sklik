@@ -43,3 +43,4 @@
 {% docs view_rate_75 %} Percentage of impressions where the viewer watched 75% of your video. {% enddocs %}
 {% docs view_rate_100 %} Percentage of impressions where the viewer watched all of your video. {% enddocs %}
 {% docs wallet_credit_czk %} User's credit. {% enddocs %}
+{% docs device %} Device to which metrics apply. {% enddocs %}

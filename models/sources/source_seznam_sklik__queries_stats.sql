@@ -1,6 +1,6 @@
 {{ config(enabled=var('seznam_sklik__using_search_term_keyword_stats', True)) }}
 
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'queries_stats') }}
@@ -35,7 +35,7 @@ final as (
 
         coalesce(avg_pos, 0) as ad_position,
 
-    from base
+    from source
 )
 
 select * from final

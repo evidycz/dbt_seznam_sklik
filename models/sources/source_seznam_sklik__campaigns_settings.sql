@@ -1,4 +1,4 @@
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'campaigns') }}
@@ -26,7 +26,7 @@ final as (
         ad_selection,
         video_format
 
-    from base
+    from source
 )
 
 select * from final

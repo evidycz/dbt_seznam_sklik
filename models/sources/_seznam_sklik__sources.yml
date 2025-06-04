@@ -12,6 +12,7 @@ sources:
       - name: ads_stats
       - name: banners_stats
       - name: campaigns
+      - name: groups
       - name: groups_stats
       - name: queries_stats
       - name: retargeting_stats

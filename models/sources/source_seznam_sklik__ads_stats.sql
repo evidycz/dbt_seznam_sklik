@@ -1,4 +1,4 @@
-with base as (
+with source as (
 
     select *
     from {{ source('seznam_sklik', 'ads_stats') }}
@@ -45,7 +45,7 @@ final as (
         coalesce(viewership_rate__third_quartile, 0) as view_rate_75,
         coalesce(viewership_rate__complete, 0) as view_rate_100
 
-    from base
+    from source
 )
 
 select * from final
