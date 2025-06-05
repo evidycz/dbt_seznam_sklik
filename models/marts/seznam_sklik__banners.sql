@@ -32,11 +32,7 @@ fields as (
         spend_czk,
 
         ad_position,
-
-        miss_impressions,
-        rank_lost_impressions,
-        budget_lost_impressions,
-        schedule_lost_impressions,
+        ish,
 
     from banner_stats
 )

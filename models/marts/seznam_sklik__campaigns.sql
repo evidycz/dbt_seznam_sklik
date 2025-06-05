@@ -33,13 +33,8 @@ campaigns_stats as (
         sum(spend_czk) as spend_czk,
 
         {{ weighted_average('ad_position', 'impressions', 'ad_position', round_to=2) }},
-
+        {{ weighted_average('ish', 'impressions', 'ish', round_to=2) }},
         {{ weighted_average('auction_win', 'impressions', 'auction_win', round_to=2) }},
-
-        sum(miss_impressions) as miss_impressions,
-        sum(rank_lost_impressions) as rank_lost_impressions,
-        sum(budget_lost_impressions) as budget_lost_impressions,
-        sum(schedule_lost_impressions) as schedule_lost_impressions,
 
     from groups_stats
     {{ dbt_utils.group_by(n=3) }}
@@ -88,18 +83,9 @@ fields as (
         campaigns_stats.spend_czk,
 
         campaigns_stats.ad_position,
-
+        coalesce(campaigns_stats.ish, 0) as ish,
         coalesce(campaigns_stats.auction_win, 0) as auction_win,
 
-        miss_impressions,
-        rank_lost_impressions,
-        budget_lost_impressions,
-        schedule_lost_impressions,
-
-        coalesce(views_stats.view_rate_25, 0) as view_rate_25,
-        coalesce(views_stats.view_rate_50, 0) as view_rate_50,
-        coalesce(views_stats.view_rate_75, 0) as view_rate_75,
-        coalesce(views_stats.view_rate_100, 0) as view_rate_100,
     from campaigns_stats
     left join views_stats
         on  campaigns_stats.campaign_id = views_stats.campaign_id
