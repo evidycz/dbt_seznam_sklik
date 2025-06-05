@@ -32,7 +32,7 @@ final as (
         round(coalesce(total_money, 0) / 100, 2) as spend_czk,
 
         coalesce(avg_pos, 0) as ad_position,
-        coalesce(ish_sum, 0) as ish,
+        round(coalesce(ish_sum, 0) / 100, 2) as ish,
 
     from source
 )
