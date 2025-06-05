@@ -35,7 +35,7 @@ models:
           type: number
           sql: "${total_spend} * 1000 / ${total_impressions}"
           format: "#,##0.00 Kč"
-        avg_cpa:
+        system_cpa:
           label: "CPA"
           type: number
           sql: "${total_spend} / ${total_conversions}"
@@ -227,6 +227,11 @@ models:
           dimension:
             hidden: true
           metrics:
+            total_possible_impressions:
+              label: "Total Possible Impressions"
+              hidden: true
+              type: sum
+              sql: "${impressions} + ${miss_impressions}"
             impression_share:
               label: "Impression Share"
               type: number
