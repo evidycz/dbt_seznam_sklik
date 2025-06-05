@@ -62,13 +62,8 @@ fields as (
         groups_stats.spend_czk,
 
         groups_stats.ad_position,
-
+        groups_stats.ish,
         groups_stats.auction_win,
-
-        groups_stats.miss_impressions,
-        groups_stats.rank_lost_impressions,
-        groups_stats.budget_lost_impressions,
-        groups_stats.schedule_lost_impressions,
 
         coalesce(views_stats.view_rate_25, 0) as view_rate_25,
         coalesce(views_stats.view_rate_50, 0) as view_rate_50,

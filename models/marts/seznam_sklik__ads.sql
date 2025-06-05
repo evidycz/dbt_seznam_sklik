@@ -33,11 +33,7 @@ fields as (
         spend_czk,
 
         ad_position,
-
-        miss_impressions,
-        rank_lost_impressions,
-        budget_lost_impressions,
-        schedule_lost_impressions,
+        ish,
 
         view_rate_25,
         view_rate_50,

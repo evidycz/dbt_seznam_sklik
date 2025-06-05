@@ -14,32 +14,32 @@ models:
         ctr:
           label: "CTR"
           type: number
-          sql: "${total_clicks} / ${total_impressions}"
+          sql: "COALESCE(${total_clicks} / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00%"
         avg_cpc:
           label: "CPC"
           type: number
-          sql: "${total_spend} / ${total_clicks}"
+          sql: "COALESCE(${total_spend} / NULLIF(${total_clicks}, 0), 0)"
           format: "#,##0.00 Kč"
         avg_cpm:
           label: "CPM"
           type: number
-          sql: "${total_spend} * 1000 / ${total_impressions}"
+          sql: "COALESCE(${total_spend} * 1000 / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00 Kč"
-        avg_cpa:
+        system_cpa:
           label: "CPA"
           type: number
-          sql: "${total_spend} / ${total_conversions}"
+          sql: "COALESCE(${total_spend} / NULLIF(${total_conversions}, 0), 0)"
           format: "#,##0.00 Kč"
         system_pno:
           label: "PNO"
           type: number
-          sql: "${total_spend} / ${total_conversions_value}"
+          sql: "COALESCE(${total_spend} / NULLIF(${total_conversions_value}, 0), 0)"
           format: "#,##0.00%"
         system_roas:
           label: "ROAS"
           type: number
-          sql: "${total_conversions_value} / ${total_spend}"
+          sql: "COALESCE(${total_conversions_value} / NULLIF(${total_spend}, 0), 0)"
           format: "#,##0.00%"
 
     columns:
@@ -127,6 +127,7 @@ models:
               label: "Avg. Conv. Value"
               type: average
               format: "#,##0.00 Kč"
+              groups: [ "atypical_metrics" ]
 
       - name: spend_czk
         data_type: numeric
@@ -143,3 +144,4 @@ models:
               label: "Avg. Daily Spend"
               type: average
               format: "#,##0.00 Kč"
+              groups: [ "atypical_metrics" ]

@@ -35,7 +35,7 @@ models:
           type: number
           sql: "${total_spend} * 1000 / ${total_impressions}"
           format: "#,##0.00 Kč"
-        avg_cpa:
+        system_cpa:
           label: "CPA"
           type: number
           sql: "${total_spend} / ${total_conversions}"
@@ -252,70 +252,20 @@ models:
               format: "#,##0.00"
               groups: [ "atypical_metrics" ]
 
-      - name: miss_impressions
+      - name: ish
         data_type: numeric
         description: "{{ doc('impression_share') }}"
         meta:
           dimension:
             hidden: true
           metrics:
+            weight_impression_share:
+              label: "Impression Share Weight"
+              hidden: true
+              type: sum
+              sql: "${impressions} * ${ish}"
             impression_share:
               label: "Impression Share"
               type: number
-              sql: "${total_impressions} / ${total_possible_impressions}"
+              sql: "COALESCE(${weight_impression_share} / NULLIF(${total_impressions}, 0), 0)"
               format: "#,##0.00%"
-              groups: [ "impression_share" ]
-
-      - name: rank_lost_impressions
-        data_type: numeric
-        description: "{{ doc('rank_lost_impression_share') }}"
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_rank_lost_impressions:
-              label: "Total Rank Lost Impressions"
-              hidden: true
-              type: sum
-            rank_lost_impression_share:
-              label: "Rank Lost IS"
-              type: number
-              sql: "${total_rank_lost_impressions} / ${total_possible_impressions}"
-              format: "#,##0.00%"
-              groups: [ "impression_share" ]
-
-      - name: budget_lost_impressions
-        data_type: numeric
-        description: "{{ doc('budget_lost_impression_share') }}"
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_budget_lost_impressions:
-              label: "Total Budget Lost Impressions"
-              hidden: true
-              type: sum
-            budget_lost_impression_share:
-              label: "Budget Lost IS"
-              type: number
-              sql: "${total_budget_lost_impressions} / ${total_possible_impressions}"
-              format: "#,##0.00%"
-              groups: [ "impression_share" ]
-
-      - name: schedule_lost_impressions
-        data_type: numeric
-        description: "{{ doc('schedule_lost_impression_share') }}"
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_schedule_lost_impressions:
-              label: "Total Schedule Lost Impressions"
-              hidden: true
-              type: sum
-            schedule_lost_impression_share:
-              label: "Schedule Lost IS"
-              type: number
-              sql: "${total_schedule_lost_impressions} / ${total_possible_impressions}"
-              format: "#,##0.00%"
-              groups: [ "impression_share" ]
