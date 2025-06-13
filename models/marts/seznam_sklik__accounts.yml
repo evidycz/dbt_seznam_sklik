@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: seznam_sklik__accounts
-    description: "Each record in this table represents the daily performance at the account level."
+    description: "Each entry in this table represents daily performance at the account level in the Seznam Sklik advertising system."
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -13,31 +13,37 @@ models:
       metrics:
         ctr:
           label: "CTR"
+          description: "{{ doc('ctr') }}"
           type: number
           sql: "COALESCE(${total_clicks} / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00%"
         avg_cpc:
           label: "CPC"
+          description: "{{ doc('avg_cpc') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_clicks}, 0), 0)"
           format: "#,##0.00 Kč"
         avg_cpm:
           label: "CPM"
+          description: "{{ doc('avg_cpm') }}"
           type: number
           sql: "COALESCE(${total_spend} * 1000 / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00 Kč"
         system_cpa:
           label: "CPA"
+          description: "{{ doc('system_cpa') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_conversions}, 0), 0)"
           format: "#,##0.00 Kč"
         system_pno:
           label: "PNO"
+          description: "{{ doc('system_pno') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_conversions_value}, 0), 0)"
           format: "#,##0.00%"
         system_roas:
           label: "ROAS"
+          description: "{{ doc('system_roas') }}"
           type: number
           sql: "COALESCE(${total_conversions_value} / NULLIF(${total_spend}, 0), 0)"
           format: "#,##0.00%"
@@ -50,7 +56,7 @@ models:
           dimension:
             label: "Date"
             type: date
-            time_intervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
+            time_interintervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
 
       - name: account_id
         data_type: string
@@ -88,6 +94,7 @@ models:
           metrics:
             total_impressions:
               label: "Impressions"
+              description: "{{ doc('total_impressions') }}"
               type: sum
 
       - name: clicks
@@ -99,6 +106,7 @@ models:
           metrics:
             total_clicks:
               label: "Clicks"
+              description: "{{ doc('total_clicks') }}"
               type: sum
 
       - name: conversions
@@ -110,6 +118,7 @@ models:
           metrics:
             total_conversions:
               label: "Conversions"
+              description: "{{ doc('total_conversions') }}"
               type: sum
 
       - name: conversions_value
@@ -121,10 +130,12 @@ models:
           metrics:
             total_conversions_value:
               label: "Conversions Value"
+              description: "{{ doc('total_conversions_value') }}"
               type: sum
               format: "#,##0.00 Kč"
             avg_conversions_value:
               label: "Avg. Conv. Value"
+              description: "{{ doc('avg_conversions_value') }}"
               type: average
               format: "#,##0.00 Kč"
               groups: [ "atypical_metrics" ]
@@ -138,10 +149,12 @@ models:
           metrics:
             total_spend:
               label: "Spend"
+              description: "{{ doc('total_spend') }}"
               type: sum
               format: "#,##0.00 Kč"
             avg_daily_spend:
               label: "Avg. Daily Spend"
+              description: "{{ doc('avg_daily_spend') }}"
               type: average
               format: "#,##0.00 Kč"
               groups: [ "atypical_metrics" ]
