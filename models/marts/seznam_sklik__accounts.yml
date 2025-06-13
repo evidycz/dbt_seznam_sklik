@@ -56,7 +56,7 @@ models:
           dimension:
             label: "Date"
             type: date
-            time_interintervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
+            time_intervals: [ "DAY", "WEEK", "MONTH", "YEAR", "DAY_OF_WEEK_NAME", "DAY_OF_WEEK_INDEX", "DAY_OF_MONTH_NUM", "WEEK_NUM", "MONTH_NUM" ]
 
       - name: account_id
         data_type: string
