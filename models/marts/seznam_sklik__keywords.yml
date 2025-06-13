@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: seznam_sklik__keywords
-    description: "Each record in this table represents the daily performance at the keyword level."
+    description: "Each record contains aggregated data for the last 28 days (by default) at the keyword level."
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -12,40 +12,43 @@ models:
 
     meta:
       group_details:
-        impression_share:
-          label: "Impression share"
-          description: "Fields that contain information about impression share and losses."
         atypical_metrics:
           label: "Atypical metrics"
           description: "Unusual metrics that are not commonly used in advertising accounts."
       metrics:
         ctr:
           label: "CTR"
+          description: "{{ doc('ctr') }}"
           type: number
           sql: "COALESCE(${total_clicks} / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00%"
         avg_cpc:
           label: "CPC"
+          description: "{{ doc('avg_cpc') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_clicks}, 0), 0)"
           format: "#,##0.00 Kč"
         avg_cpm:
           label: "CPM"
+          description: "{{ doc('avg_cpm') }}"
           type: number
           sql: "COALESCE(${total_spend} * 1000 / NULLIF(${total_impressions}, 0), 0)"
           format: "#,##0.00 Kč"
         system_cpa:
           label: "CPA"
+          description: "{{ doc('system_cpa') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_conversions}, 0), 0)"
           format: "#,##0.00 Kč"
         system_pno:
           label: "PNO"
+          description: "{{ doc('system_pno') }}"
           type: number
           sql: "COALESCE(${total_spend} / NULLIF(${total_conversions_value}, 0), 0)"
           format: "#,##0.00%"
         system_roas:
           label: "ROAS"
+          description: "{{ doc('system_roas') }}"
           type: number
           sql: "COALESCE(${total_conversions_value} / NULLIF(${total_spend}, 0), 0)"
           format: "#,##0.00%"
@@ -99,6 +102,48 @@ models:
             label: "Ad Group Name"
             type: string
 
+      - name: keyword_id
+        data_type: string
+        description: "{{ doc('keyword_id') }}"
+        tests:
+          - not_null
+        meta:
+          dimension:
+            label: "Keyword ID"
+            type: string
+
+      - name: keyword_text
+        data_type: string
+        description: "{{ doc('keyword_text') }}"
+        meta:
+          dimension:
+            label: "Keyword Text"
+            type: string
+
+      - name: keyword_match_type
+        data_type: string
+        description: "{{ doc('keyword_match_type') }}"
+        meta:
+          dimension:
+            label: "Keyword Match Type"
+            type: string
+
+      - name: keyword_status
+        data_type: string
+        description: "{{ doc('keyword_status') }}"
+        meta:
+          dimension:
+            name: "Keyword Status"
+            label: string
+
+      - name: set_cpc
+        data_type: numeric
+        description: "{{ doc('set_cpc') }}"
+        meta:
+          dimension:
+            label: "Set CPC"
+            type: number
+
       - name: impressions
         data_type: int
         description: "{{ doc('impressions') }}"
@@ -108,6 +153,7 @@ models:
           metrics:
             total_impressions:
               label: "Impressions"
+              description: "{{ doc('total_impressions') }}"
               type: sum
 
       - name: clicks
@@ -119,6 +165,7 @@ models:
           metrics:
             total_clicks:
               label: "Clicks"
+              description: "{{ doc('total_clicks') }}"
               type: sum
 
       - name: conversions
@@ -130,6 +177,7 @@ models:
           metrics:
             total_conversions:
               label: "Conversions"
+              description: "{{ doc('total_conversions') }}"
               type: sum
 
       - name: conversions_value
@@ -141,10 +189,12 @@ models:
           metrics:
             total_conversions_value:
               label: "Conversions Value"
+              description: "{{ doc('total_conversions_value') }}"
               type: sum
               format: "#,##0.00 Kč"
             avg_conversions_value:
               label: "Avg. Conv. Value"
+              description: "{{ doc('avg_conversions_value') }}"
               type: average
               format: "#,##0.00 Kč"
               groups: [ "atypical_metrics" ]
@@ -158,10 +208,12 @@ models:
           metrics:
             total_spend:
               label: "Spend"
+              description: "{{ doc('total_spend') }}"
               type: sum
               format: "#,##0.00 Kč"
             avg_daily_spend:
               label: "Avg. Daily Spend"
+              description: "{{ doc('avg_daily_spend') }}"
               type: average
               format: "#,##0.00 Kč"
               groups: [ "atypical_metrics" ]
@@ -180,6 +232,7 @@ models:
               sql: "${impressions} * ${ad_position}"
             avg_position:
               label: "Avg. Position"
+              description: "{{ doc('avg_position') }}"
               type: number
               sql: "COALESCE(${weight_position} / NULLIF(${total_impressions}, 0), 0)"
               format: "#,##0.00"
