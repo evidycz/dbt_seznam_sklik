@@ -44,3 +44,24 @@
 {% docs view_rate_100 %} Percentage of impressions where the viewer watched all of your video. {% enddocs %}
 {% docs wallet_credit_czk %} User's credit. {% enddocs %}
 {% docs device %} Device to which metrics apply. {% enddocs %}
+{% docs ctr %} Click-through rate. The ratio of clicks to impressions (clicks divided by impressions). {% enddocs %}
+{% docs avg_cpc %} Average cost per click. The total cost divided by the number of clicks. {% enddocs %}
+{% docs avg_cpm %} Average cost per thousand impressions. The total cost multiplied by 1000, divided by the number of impressions. {% enddocs %}
+{% docs system_cpa %} Cost per acquisition. The total cost divided by the number of conversions. {% enddocs %}
+{% docs system_pno %} The total cost divided by the conversion value. {% enddocs %}
+{% docs system_roas %} Return on ad spend. The total conversion value divided by the total cost. {% enddocs %}
+{% docs win_rate %} Auction success rate. The percentage of auctions that resulted in an impression. {% enddocs %}
+{% docs impression_share %} The impressions you've received on the Search Network or Display Network divided by the estimated number of impressions you were eligible to receive. {% enddocs %}
+{% docs avg_position %} The average position in which the ad is displayed, weighted by the number of impressions. {% enddocs %}
+{% docs avg_daily_spend %} The average daily amount spent on ads. {% enddocs %}
+{% docs avg_conversions_value %} The average value of conversions. {% enddocs %}
+{% docs total_conversions_value %} The total value of conversions. {% enddocs %}
+{% docs total_conversions %} The total number of conversions. {% enddocs %}
+{% docs total_views %} The total number of times your video ads were viewed. {% enddocs %}
+{% docs total_clicks %} The total number of clicks on your ads. {% enddocs %}
+{% docs total_impressions %} The total count of how often your ads have appeared on search results pages or websites. {% enddocs %}
+{% docs search_term %} The search query that triggered the ad. {% enddocs %}
+{% docs keyword_id %} The id of the keyword. {% enddocs %}
+{% docs keyword_text %} The text of the keyword. {% enddocs %}
+{% docs keyword_match_type %} The match type of the keyword (exact, phrase, or broad). {% enddocs %}
+{% docs keyword_status %} The status of the keyword (set by user). {% enddocs %}
