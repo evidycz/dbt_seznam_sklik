@@ -1,4 +1,7 @@
-{{ config(enabled=var('seznam_sklik__using_search_term_keyword_stats', True)) }}
+{{ config(
+    cluster_by="account_name",
+    enabled=var('seznam_sklik__using_search_term_keyword_stats', True)
+) }}
 
 with queries_stats as (
 
