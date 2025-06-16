@@ -33,7 +33,6 @@
 {% docs conversions_value %} The value of conversions. {% enddocs %}
 {% docs spend_czk %} The sum of your cost-per-click (CPC) and cost-per-thousand impressions (CPM) costs during this period. {% enddocs %}
 {% docs ad_position %} The average position in which the ad is displayed. {% enddocs %}
-{% docs win_rate %} Auction success rate. {% enddocs %}
 {% docs impression_share %} The impressions you've received on the Search Network or Display Network divided by the estimated number of impressions you were eligible to receive. {% enddocs %}
 {% docs rank_lost_impression_share %} The estimated percentage of impressions that your ads didn't receive due to poor Ad Rank. {% enddocs %}
 {% docs budget_lost_impression_share %} The estimated percentage of times that your ad was eligible to show but didn't because your budget was too low. {% enddocs %}
@@ -51,7 +50,6 @@
 {% docs system_pno %} The total cost divided by the conversion value. {% enddocs %}
 {% docs system_roas %} Return on ad spend. The total conversion value divided by the total cost. {% enddocs %}
 {% docs win_rate %} Auction success rate. The percentage of auctions that resulted in an impression. {% enddocs %}
-{% docs impression_share %} The impressions you've received on the Search Network or Display Network divided by the estimated number of impressions you were eligible to receive. {% enddocs %}
 {% docs avg_position %} The average position in which the ad is displayed, weighted by the number of impressions. {% enddocs %}
 {% docs avg_daily_spend %} The average daily amount spent on ads. {% enddocs %}
 {% docs avg_conversions_value %} The average value of conversions. {% enddocs %}
