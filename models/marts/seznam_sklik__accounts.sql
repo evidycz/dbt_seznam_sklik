@@ -1,3 +1,7 @@
+{{ config(
+    cluster_by="account_name"
+) }}
+
 with accounts_settings as (
 
     select *

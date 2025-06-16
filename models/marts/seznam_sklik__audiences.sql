@@ -1,3 +1,7 @@
+{{ config(
+    cluster_by="account_name"
+) }}
+
 with retargeting_stats as (
 
     select *
